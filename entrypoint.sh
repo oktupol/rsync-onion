@@ -23,8 +23,6 @@ service tor start
 destination="$INPUT_SSH_USER@$INPUT_ONION_HOST.onion:$INPUT_DESTINATION_DIR"
 ssh_opts="ssh -i id_ssh -p $INPUT_SSH_PORT -o 'StrictHostKeyChecking=accept-new'"
 
-printenv
-
 if [[ ( -n "$INPUT_DELETE" ) && ( "$INPUT_DELETE" = "true" ) ]]; then
   torsocks rsync -rlptvz -e "$ssh_opts" --delete "$INPUT_SOURCE_DIR" "$destination"
 else
