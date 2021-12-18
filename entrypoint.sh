@@ -3,8 +3,8 @@
 set -eu
 
 # Set up ssh key
-echo "$INPUT_SSH_PRIVATEKEY" > id_ssh
-chmod 600 id_ssh
+echo "$INPUT_SSH_PRIVATEKEY" > /tmp/id_ssh
+chmod 600 /tmp/id_ssh
 
 # Set up client authorization
 if [[ -n "$INPUT_ONION_CLIENT_AUTH_PRIVATEKEY" ]]; then
@@ -21,7 +21,7 @@ service tor start
 
 # Actual file synchronisation
 destination="$INPUT_SSH_USER@$INPUT_ONION_HOST.onion:$INPUT_DESTINATION_DIR"
-ssh_opts="ssh -i id_ssh -p $INPUT_SSH_PORT -o 'StrictHostKeyChecking=accept-new'"
+ssh_opts="ssh -i /tmp/id_ssh -p $INPUT_SSH_PORT -o 'StrictHostKeyChecking=accept-new'"
 
 if [[ ( -n "$INPUT_DELETE" ) && ( "$INPUT_DELETE" = "true" ) ]]; then
   torsocks rsync -rlptvz -e "$ssh_opts" --delete "$INPUT_SOURCE_DIR" "$destination"
