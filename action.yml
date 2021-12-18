@@ -1,5 +1,5 @@
 name: 'Upload to onion service'
-description: 'Uploads files to an onion service using scp'
+description: 'Uploads files to an onion service using rsync'
 author: 'Sebastian Wieland'
 inputs:
   source_dir:
