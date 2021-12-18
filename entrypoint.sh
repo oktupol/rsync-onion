@@ -25,7 +25,7 @@ ssh_opts="ssh -i id_ssh -p $INPUT_SSH_PORT -o 'StrictHostKeyChecking=accept-new'
 
 printenv
 
-if [[ -n "$INPUT_DELETE" -a "$INPUT_DELETE" = "true" ]]; then
+if [[ ( -n "$INPUT_DELETE" ) && ( "$INPUT_DELETE" = "true" ) ]]; then
   torsocks rsync -rlptvz -e $ssh_opts --delete "$INPUT_SOURCE_DIR" "$destination"
 else
   torsocks rsync -rlptvz -e $ssh_opts "$INPUT_SOURCE_DIR" "$destination"
