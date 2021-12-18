@@ -1,0 +1,33 @@
+name: Rsync Onion
+on: [workflow-dispatch]
+jobs:
+  ci:
+    name: Test action
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Generate dummy file
+        run: mkdir -p dist && date > dist/currentdate.txt
+      
+      - name: Rsync to onion service, keep remote files
+        uses: ./
+        with:
+          source_dir: ./dist/
+          destination_dir: /home/pi/gh-destination/keep
+          ssh_user: ${{ secrets.SSH_USER }}
+          ssh_privatekey: ${{ secrets.SSH_PRIVATEKEY }}
+          onion_host: ${{ secrets.ONION_HOST }}
+          onion_client_auth_privatekey: ${{ secret.ONION_CLIENT_AUTH_PRIVATEKEY }}
+
+      - name: Rsync to onion service, delete extraneous remote files
+        uses: ./
+        with:
+          source_dir: ./dist/
+          destination_dir: /home/pi/gh-destination/delete
+          ssh_user: ${{ secrets.SSH_USER }}
+          ssh_privatekey: ${{ secrets.SSH_PRIVATEKEY }}
+          onion_host: ${{ secrets.ONION_HOST }}
+          onion_client_auth_privatekey: ${{ secret.ONION_CLIENT_AUTH_PRIVATEKEY }}
+          delete: true
