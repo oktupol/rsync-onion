@@ -29,5 +29,5 @@ jobs:
           ssh_user: pi
           ssh_privatekey: ${{ secrets.SSH_PRIVATEKEY }}
           onion_host: ${{ secrets.ONION_HOST }}
-          onion_client_auth_privatekey: ${{ secret.ONION_CLIENT_AUTH_PRIVATEKEY }}
+          onion_client_auth_privatekey: ${{ secrets.ONION_CLIENT_AUTH_PRIVATEKEY }}
           delete: true
