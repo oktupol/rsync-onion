@@ -1,4 +1,4 @@
-# 🚀 Rsync to Onion Service for GitHub Actions
+# 🚀 Rsync to Onion Service for GitHub Actions 🧅
 
 [Github Action](https://github.com/features/actions) for copying files and
 artifacts via Rsync to an Onion service.
