@@ -19,7 +19,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Rsync to Onion
-        uses: oktupol/rsync-onion@v0.2.0
+        uses: oktupol/rsync-onion@v0.2.1
         with:
           source_dir: ./dist/
           destination_dir: /var/www/htdocs
@@ -29,6 +29,8 @@ jobs:
           onion_host: ${{ secrets.ONION_HOST }}
           onion_client_auth_privatekey: ${{ secret.ONION_CLIENT_AUTH_PRIVATEKEY}}
           delete: true
+          before_rsync_command: 'systemctl myapplication stop'
+          after_rsync_command: 'systemctl myapplication start'
 ```
 
 ## Input variables:
