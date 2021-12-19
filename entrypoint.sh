@@ -43,7 +43,7 @@ destination="$INPUT_SSH_USER@$INPUT_ONION_HOST.onion"
 
 # Before command
 if [[ ( -v "INPUT_BEFORE_RSYNC_COMMAND" ) && ( -n "$INPUT_BEFORE_RSYNC_COMMAND" ) ]]; then
-  ssh $ssh_opts "$destination" "$INPUT_BEFORE_RSYNC_COMMAND"
+  torsocks ssh $ssh_opts "$destination" "$INPUT_BEFORE_RSYNC_COMMAND"
   echo "Before command executed"
 fi
 
@@ -58,6 +58,6 @@ echo "Rsync finished"
 
 # After command
 if [[ ( -v "INPUT_AFTER_RSYNC_COMMAND" ) && ( -n "$INPUT_AFTER_RSYNC_COMMAND" ) ]]; then
-  ssh $ssh_opts "$destination" "$INPUT_AFTER_RSYNC_COMMAND"
+  torsocks ssh $ssh_opts "$destination" "$INPUT_AFTER_RSYNC_COMMAND"
   echo "After command executed"
 fi
