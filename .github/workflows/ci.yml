@@ -1,5 +1,8 @@
 name: Rsync Onion
-on: [push]
+on: 
+  push:
+    branches:
+      - 'feature/*'
 jobs:
   ci:
     name: Test action

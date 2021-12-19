@@ -29,8 +29,8 @@ jobs:
           onion_host: ${{ secrets.ONION_HOST }}
           onion_client_auth_privatekey: ${{ secret.ONION_CLIENT_AUTH_PRIVATEKEY}}
           delete: true
-          before_rsync_command: 'systemctl myapplication stop'
-          after_rsync_command: 'systemctl myapplication start'
+          before_rsync_command: 'systemctl stop myapplication'
+          after_rsync_command: 'systemctl start myapplication'
 ```
 
 ## Input variables:
