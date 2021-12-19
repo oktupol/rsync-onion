@@ -1,4 +1,4 @@
-name: 'Upload to onion service'
+name: 'Upload to Onion Service'
 description: 'Uploads files to an onion service using rsync on Tor.'
 author: 'Sebastian Wieland'
 inputs:
