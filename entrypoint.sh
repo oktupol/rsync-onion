@@ -35,7 +35,7 @@ fi
 if [[ -v "SSH_HOST_FINGERPRINT" ]]; then
   hosts_file="/tmp/known_hosts"
   echo "$SSH_HOST_FINGERPRINT" > $hosts_file
-  ssh_opts="$ssh_opts -o UserKnownHostsFile=$hosts_file"
+  ssh_opts="$ssh_opts -o 'UserKnownHostsFile=$hosts_file'"
   
   echo 'Host key fingerprint provided'
 fi
