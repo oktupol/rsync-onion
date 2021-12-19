@@ -33,8 +33,8 @@ if [[ ( -v "INPUT_SSH_DISABLE_STRICT_HOST_KEY_CHECKING" ) && ( "$INPUT_SSH_DISAB
 fi
 
 # SSH Host fingerprint
-if [[ -v "SSH_HOST_FINGERPRINT" ]]; then
-  echo "$SSH_HOST_FINGERPRINT" > $hosts_file
+if [[ -v "INPUT_SSH_HOST_FINGERPRINT" ]]; then
+  echo "$INPUT_SSH_HOST_FINGERPRINT" > $hosts_file
   
   echo 'Host key fingerprint provided'
 fi
@@ -47,5 +47,3 @@ if [[ ( -v "INPUT_DELETE" ) && ( "$INPUT_DELETE" = "true" ) ]]; then
 else
   torsocks rsync -rlptvz -e "$ssh_opts" "$INPUT_SOURCE_DIR" "$destination"
 fi
-
-cat $hosts_file
