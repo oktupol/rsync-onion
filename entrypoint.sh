@@ -43,7 +43,7 @@ destination="$INPUT_SSH_USER@$INPUT_ONION_HOST.onion"
 
 # Before command
 if [[ ( -v "INPUT_BEFORE_RSYNC_COMMAND" ) && ( -n "$INPUT_BEFORE_RSYNC_COMMAND" ) ]]; then
-  ssh $ssh_opts "$INPUT_BEFORE_RSYNC_COMMAND"
+  ssh $ssh_opts "$destination" "$INPUT_BEFORE_RSYNC_COMMAND"
   echo "Before command executed"
 fi
 
