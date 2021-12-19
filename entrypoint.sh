@@ -58,6 +58,6 @@ echo "Rsync finished"
 
 # After command
 if [[ ( -v "INPUT_AFTER_RSYNC_COMMAND" ) && ( -n "$INPUT_AFTER_RSYNC_COMMAND" ) ]]; then
-  ssh $ssh_opts "$INPUT_AFTER_RSYNC_COMMAND"
+  ssh $ssh_opts "$destination" "$INPUT_AFTER_RSYNC_COMMAND"
   echo "After command executed"
 fi
