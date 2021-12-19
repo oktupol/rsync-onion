@@ -25,7 +25,7 @@ service tor start
 ssh_opts="ssh -i /tmp/id_ssh -p $INPUT_SSH_PORT"
 
 # Strict host key checking
-if [[ ( -n "$INPUT_SSL_DISABLE_STRICT_HOST_KEY_CHECKING" ) && ( "$INPUT_SSL_DISABLE_STRICT_HOST_KEY_CHECKING" = "true" )]]; then
+if [[ ( -n "$INPUT_SSH_DISABLE_STRICT_HOST_KEY_CHECKING" ) && ( "$INPUT_SSH_DISABLE_STRICT_HOST_KEY_CHECKING" = "true" )]]; then
   ssh_opts="$ssh_opts -o 'StrictHostKeyChecking=accept-new'"
 
   echo 'Strict host key checking disabled'
