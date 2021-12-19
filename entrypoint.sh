@@ -7,7 +7,7 @@ echo "$INPUT_SSH_PRIVATEKEY" > /tmp/id_ssh
 chmod 600 /tmp/id_ssh
 
 # Set up client authorization
-if [[ -n "$INPUT_ONION_CLIENT_AUTH_PRIVATEKEY" ]]; then
+if [[ -v "INPUT_ONION_CLIENT_AUTH_PRIVATEKEY" ]]; then
   authdir=/var/lib/tor/onion_auth
   echo "ClientOnionAuthDir $authdir" >> /etc/tor/torrc
   mkdir -p $authdir
@@ -25,7 +25,7 @@ service tor start
 ssh_opts="ssh -i /tmp/id_ssh -p $INPUT_SSH_PORT"
 
 # Strict host key checking
-if [[ ( -n "$INPUT_SSH_DISABLE_STRICT_HOST_KEY_CHECKING" ) && ( "$INPUT_SSH_DISABLE_STRICT_HOST_KEY_CHECKING" = "true" )]]; then
+if [[ ( -v "INPUT_SSH_DISABLE_STRICT_HOST_KEY_CHECKING" ) && ( "$INPUT_SSH_DISABLE_STRICT_HOST_KEY_CHECKING" = "true" )]]; then
   ssh_opts="$ssh_opts -o 'StrictHostKeyChecking=accept-new'"
 
   echo 'Strict host key checking disabled'
@@ -43,7 +43,7 @@ fi
 # Actual file synchronisation
 destination="$INPUT_SSH_USER@$INPUT_ONION_HOST.onion:$INPUT_DESTINATION_DIR"
 
-if [[ ( -n "$INPUT_DELETE" ) && ( "$INPUT_DELETE" = "true" ) ]]; then
+if [[ ( -v "INPUT_DELETE" ) && ( "$INPUT_DELETE" = "true" ) ]]; then
   torsocks rsync -rlptvz -e "$ssh_opts" --delete "$INPUT_SOURCE_DIR" "$destination"
 else
   torsocks rsync -rlptvz -e "$ssh_opts" "$INPUT_SOURCE_DIR" "$destination"
