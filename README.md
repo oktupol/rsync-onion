@@ -25,6 +25,7 @@ jobs:
           destination_dir: /var/www/htdocs
           ssh_user: ${{ secrets.SSH_USER }}
           ssh_privatekey: ${{ secrets.SSH_PRIVATEKEY }}
+          ssh_host_fingerprint: ${{ secrets.SSH_HOST_FINGERPRINT }}
           onion_host: ${{ secrets.ONION_HOST }}
           onion_client_auth_privatekey: ${{ secret.ONION_CLIENT_AUTH_PRIVATEKEY}}
           delete: true
@@ -39,6 +40,12 @@ jobs:
 - `ssh_user` - SSH username for remote authentication.
 - `ssh_privatekey` - SSH private key for remote authentication. Currently, only
   keys without passphrases are supported.
+- Either of:
+    - `ssh_host_fingerprint` - Fingerprint of the SSH host's key. Use the same
+      format as in the ~/.ssh/known_hosts file.  
+    Example: `xjocx3[...]czad.onion ecdsa-sha2-nistp256 AAAAE2VjZHNh[...]qhCg=`
+    - `ssh_disable_strict_host_key_checking` - Set this to true to disable host
+      key checking. This is less secure.
 - `onion_host` - The hostname of the onion service _WITHOUT_ the `.onion`
   suffix.  
   For `duckduckgogg42xjoc72x3sjasowoarfbgcmvfimaftt6twagswzczad.onion`, this

@@ -22,6 +22,15 @@ inputs:
     required: false
     default: 22
     description: 'SSH Port. Default: 22'
+      
+  ssh_host_fingerprint:
+    required: false
+    description: 'Fingerprint of the ssh host. Use the same syntax as in the ~/.ssh/known_hosts file, complete with hostname, key type and fingerprint.'
+      
+  ssh_disable_strict_host_key_checking:
+    required: false
+    default: false
+    description: 'Disable strict host key checking. Alternatively, provide a host fingerprint'
   
   onion_host:
     required: true
