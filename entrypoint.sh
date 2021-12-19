@@ -23,11 +23,11 @@ service tor start
 
 # Set up ssh options
 hosts_file="/tmp/known_hosts"
-ssh_opts="-i /tmp/id_ssh -p $INPUT_SSH_PORT -o 'UserKnownHostsFile=$hosts_file'"
+ssh_opts="-i /tmp/id_ssh -p $INPUT_SSH_PORT -o UserKnownHostsFile=$hosts_file"
 
 # Strict host key checking
 if [[ ( -v "INPUT_SSH_DISABLE_STRICT_HOST_KEY_CHECKING" ) && ( "$INPUT_SSH_DISABLE_STRICT_HOST_KEY_CHECKING" = "true" )]]; then
-  ssh_opts="$ssh_opts -o 'StrictHostKeyChecking=accept-new'"
+  ssh_opts="$ssh_opts -o StrictHostKeyChecking=accept-new"
 
   echo 'Strict host key checking disabled'
 fi
