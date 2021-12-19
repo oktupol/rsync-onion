@@ -19,7 +19,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Rsync to Onion
-        uses: oktupol/rsync-onion@master
+        uses: oktupol/rsync-onion@v0.2.0
         with:
           source_dir: ./dist/
           destination_dir: /var/www/htdocs
