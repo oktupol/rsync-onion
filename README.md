@@ -58,6 +58,10 @@ jobs:
   Authorization](https://community.torproject.org/onion-services/advanced/client-auth/).
   If enabled in the onion service, this value is required.
 - `delete` - Set this to `true` to delete extraneous files from the destination dir.
+- `before_rsync_command` - Execute a command on the remote machine before rsync
+  starts.
+- `after_rsync_command` - Execute a command on the remote machine after rsync
+  finishes.
   
 Currently, no password authentication is supported.
 

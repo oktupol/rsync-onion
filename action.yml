@@ -32,6 +32,14 @@ inputs:
     default: false
     description: 'Disable strict host key checking. Alternatively, provide a host fingerprint'
   
+  before_rsync_command:
+    required: false
+    description: 'A command to be executed on the remote machine before rsync starts.'
+  
+  after_rsync_command:
+    required: false
+    description: 'A command to be executed on the remote machine before rsync finishes'
+  
   onion_host:
     required: true
     description: 'Onion hostname of the remote server WITHOUT the .onion suffix.'

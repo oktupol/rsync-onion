@@ -33,3 +33,5 @@ jobs:
           onion_host: ${{ secrets.ONION_HOST }}
           onion_client_auth_privatekey: ${{ secrets.ONION_CLIENT_AUTH_PRIVATEKEY }}
           delete: true
+          before_rsync_command: 'echo "before" > /home/pi/gh-destination/test.txt'
+          after_rsync_command: 'echo "after" >> /home/pi/gh-destination/test.txt'

@@ -23,7 +23,7 @@ service tor start
 
 # Set up ssh options
 hosts_file="/tmp/known_hosts"
-ssh_opts="ssh -i /tmp/id_ssh -p $INPUT_SSH_PORT -o 'UserKnownHostsFile=$hosts_file'"
+ssh_opts="-i /tmp/id_ssh -p $INPUT_SSH_PORT -o 'UserKnownHostsFile=$hosts_file'"
 
 # Strict host key checking
 if [[ ( -v "INPUT_SSH_DISABLE_STRICT_HOST_KEY_CHECKING" ) && ( "$INPUT_SSH_DISABLE_STRICT_HOST_KEY_CHECKING" = "true" )]]; then
@@ -33,17 +33,31 @@ if [[ ( -v "INPUT_SSH_DISABLE_STRICT_HOST_KEY_CHECKING" ) && ( "$INPUT_SSH_DISAB
 fi
 
 # SSH Host fingerprint
-if [[ -v "INPUT_SSH_HOST_FINGERPRINT" ]]; then
+if [[ ( -v "INPUT_SSH_HOST_FINGERPRINT" ) && ( -n "$INPUT_SSH_HOST_FINGERPRINT" ) ]]; then
   echo "$INPUT_SSH_HOST_FINGERPRINT" > $hosts_file
   
   echo 'Host key fingerprint provided'
 fi
 
-# Actual file synchronisation
-destination="$INPUT_SSH_USER@$INPUT_ONION_HOST.onion:$INPUT_DESTINATION_DIR"
+destination="$INPUT_SSH_USER@$INPUT_ONION_HOST.onion"
 
+# Before command
+if [[ ( -v "INPUT_BEFORE_RSYNC_COMMAND" ) && ( -n "$INPUT_BEFORE_RSYNC_COMMAND" ) ]]; then
+  ssh $ssh_opts "$INPUT_BEFORE_RSYNC_COMMAND"
+  echo "Before command executed"
+fi
+
+# Actual file synchronisation
+destination_dir="$destination:$INPUT_DESTINATION_DIR"
 if [[ ( -v "INPUT_DELETE" ) && ( "$INPUT_DELETE" = "true" ) ]]; then
-  torsocks rsync -rlptvz -e "$ssh_opts" --delete "$INPUT_SOURCE_DIR" "$destination"
+  torsocks rsync -rlptvz -e "ssh $ssh_opts" --delete "$INPUT_SOURCE_DIR" "$destination_dir"
 else
-  torsocks rsync -rlptvz -e "$ssh_opts" "$INPUT_SOURCE_DIR" "$destination"
+  torsocks rsync -rlptvz -e "ssh $ssh_opts" "$INPUT_SOURCE_DIR" "$destination_dir"
+fi
+echo "Rsync finished"
+
+# After command
+if [[ ( -v "INPUT_AFTER_RSYNC_COMMAND" ) && ( -n "$INPUT_AFTER_RSYNC_COMMAND" ) ]]; then
+  ssh $ssh_opts "$INPUT_AFTER_RSYNC_COMMAND"
+  echo "After command executed"
 fi
