@@ -32,7 +32,7 @@ if [[ ( -v "INPUT_SSH_DISABLE_STRICT_HOST_KEY_CHECKING" ) && ( "$INPUT_SSH_DISAB
 fi
 
 # SSH Host fingerprint
-if [[ -n "$SSH_HOST_FINGERPRINT" ]]; then
+if [[ -v "SSH_HOST_FINGERPRINT" ]]; then
   hosts_file="/tmp/known_hosts"
   echo "$SSH_HOST_FINGERPRINT" > $hosts_file
   ssh_opts="$ssh_opts -o UserKnownHostsFile=$hosts_file"
