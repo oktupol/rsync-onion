@@ -22,7 +22,8 @@ fi
 service tor start
 
 # Set up ssh options
-ssh_opts="ssh -i /tmp/id_ssh -p $INPUT_SSH_PORT"
+hosts_file="/tmp/known_hosts"
+ssh_opts="ssh -i /tmp/id_ssh -p $INPUT_SSH_PORT -o 'UserKnownHostsFile=$hosts_file'"
 
 # Strict host key checking
 if [[ ( -v "INPUT_SSH_DISABLE_STRICT_HOST_KEY_CHECKING" ) && ( "$INPUT_SSH_DISABLE_STRICT_HOST_KEY_CHECKING" = "true" )]]; then
@@ -33,9 +34,7 @@ fi
 
 # SSH Host fingerprint
 if [[ -v "SSH_HOST_FINGERPRINT" ]]; then
-  hosts_file="/tmp/known_hosts"
   echo "$SSH_HOST_FINGERPRINT" > $hosts_file
-  ssh_opts="$ssh_opts -o 'UserKnownHostsFile=$hosts_file'"
   
   echo 'Host key fingerprint provided'
 fi
@@ -48,3 +47,5 @@ if [[ ( -v "INPUT_DELETE" ) && ( "$INPUT_DELETE" = "true" ) ]]; then
 else
   torsocks rsync -rlptvz -e "$ssh_opts" "$INPUT_SOURCE_DIR" "$destination"
 fi
+
+cat $hosts_file
