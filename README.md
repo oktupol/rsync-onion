@@ -87,6 +87,8 @@ as well. That way, even if someone other than you found out your device's onion
 url, they wouldn't be able to resolve and connect to it due to not having the
 correct private key.
 
+[Want to see a real world example? Click here!](https://github.com/oktupol/discord-pizzabot/blob/main/.github/workflows/deploy.yml)
+
 This action is intended for people who want to upload files onto a remote
 server based on a Workflow, without having to expose it to the "open" Internet.
 If you're running a web server, this is probably a bit excessive, since your
